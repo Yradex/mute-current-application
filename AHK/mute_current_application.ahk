@@ -9,8 +9,14 @@
     ToolTip, There was a problem retrieving the application volume interface
     SetTimer, RemoveToolTip, 500 ; Display the tooltip for 3 seconds
   VA_ISimpleAudioVolume_GetMute(Volume, Mute)  ;Get mute state
-  ; Msgbox % "Application " simplexe " is currently " (mute ? "muted" : "not muted")
-  VA_ISimpleAudioVolume_SetMute(Volume, !Mute) ;Toggle mute state
+  ; Toggle mute state
+  VA_ISimpleAudioVolume_SetMute(Volume, !Mute)
+  ; Update mute variable to the new state 
+  VA_ISimpleAudioVolume_GetMute(Volume, Mute)
+  ; Display status tooltip
+  MuteStatus := Mute ? "muted" : "unmuted"
+  ToolTip, %simplexe% - %MuteStatus%
+  SetTimer, RemoveToolTip, 2000 ; Display the tooltip for 2 seconds
   ObjRelease(Volume)
 return
 
