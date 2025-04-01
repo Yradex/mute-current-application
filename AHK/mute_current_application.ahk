@@ -5,9 +5,11 @@
     ControlGetFocus, FocusedControl, ahk_id %WindowEXE%
     ControlGet, Hwnd, Hwnd,, %FocusedControl%, ahk_id %WindowEXE%
     WinGet, simplexe, processname, ahk_id %Hwnd%
-  if !(Volume := GetVolumeObject(simplexe))
+  if !(Volume := GetVolumeObject(simplexe)) {
     ToolTip, There was a problem retrieving the application volume interface
-    SetTimer, RemoveToolTip, 500 ; Display the tooltip for 3 seconds
+    SetTimer, RemoveToolTip, 2000 ; Display the tooltip for 3 seconds
+    return
+  }
   VA_ISimpleAudioVolume_GetMute(Volume, Mute)  ;Get mute state
   ; Toggle mute state
   VA_ISimpleAudioVolume_SetMute(Volume, !Mute)
